@@ -16,7 +16,7 @@ auth.set_access_token(access_token_key, access_token_secret)
 
 if __name__ == '__main__':
 
-    countries = open('./countries_language/countries_korean','rt', encoding='UTF8')
+    countries = open('./countries_language/countries_hindi','rt', encoding='UTF8')
     country_list = []
     for country in countries.readlines():
         country_list.append(country.strip('\n'))
@@ -24,5 +24,6 @@ if __name__ == '__main__':
     twitterListener = TwitterListener.TwitterListener(country_list)
     twitterStream = Stream(auth, twitterListener)
     print('connecting..')
-    twitterStream.filter(track=country_list, async=True, languages=['ko'])
+    #twitterStream.sample()
+    twitterStream.filter(async=True, languages=['hi'],track=country_list)
     print('listening..')
