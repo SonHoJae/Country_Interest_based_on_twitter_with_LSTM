@@ -16,14 +16,16 @@ auth.set_access_token(access_token_key, access_token_secret)
 
 if __name__ == '__main__':
 
-    countries = open('./countries_language/countries_hindi','rt', encoding='UTF8')
+    countries = open('./countries_language/countries_english','rt', encoding='UTF8')
     country_list = []
     for country in countries.readlines():
         country_list.append(country.strip('\n'))
-
+    language_code_file = open('language_code','rt', encoding='UTF8')
+    languages = [country_code.split()[1] for country_code in language_code_file.readlines()]
+    print(languages)
     twitterListener = TwitterListener.TwitterListener(country_list)
     twitterStream = Stream(auth, twitterListener)
     print('connecting..')
-    #twitterStream.sample()
-    twitterStream.filter(async=True, languages=['hi'],track=country_list)
+    twitterStream.sample()
+    #twitterStream.filter(async=True, track=['지진'], languages=['ko'])
     print('listening..')
