@@ -1,9 +1,11 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
-from tweepy import Stream
-import tweepy
-import TwitterListener
 import sys
+
+import tweepy
+from tweepy import Stream
+
+from Data_Acquisition import TwitterListener
 
 consumer_key = '5z0sfk6FYOa6HQwsW50o2rcTc'
 consumer_secret = 'uSf6mPLhqVew9QyWsFUp8N6cUEpBDRNwrU48hRpsMrJzOId7UK'
