@@ -1,10 +1,7 @@
-
-from tweepy import StreamListener
 from tweepy import Stream
 import tweepy
 import TwitterListener
-import json
-import threading
+import sys
 
 consumer_key = '5z0sfk6FYOa6HQwsW50o2rcTc'
 consumer_secret = 'uSf6mPLhqVew9QyWsFUp8N6cUEpBDRNwrU48hRpsMrJzOId7UK'
@@ -15,17 +12,30 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token_key, access_token_secret)
 
 if __name__ == '__main__':
+    target_language = sys.argv[1] # country argv
 
-    countries = open('./countries_language/countries_english','rt', encoding='UTF8')
+    # country list from target language
+    countries = open('./countries_language/countries_'+target_language,'rt', encoding='UTF8')
     country_list = []
+    country_code_dict = dict()
     for country in countries.readlines():
         country_list.append(country.strip('\n'))
+
+    # language code information
     language_code_file = open('language_code','rt', encoding='UTF8')
-    languages = [country_code.split()[1] for country_code in language_code_file.readlines()]
-    print(languages)
+    for country_code in language_code_file.readlines():
+        country, code = country_code.split()
+        country_code_dict[country] = code
+
+    # twitter listener with passing country list
     twitterListener = TwitterListener.TwitterListener(country_list)
     twitterStream = Stream(auth, twitterListener)
     print('connecting..')
-    twitterStream.sample()
+    print('country list ' + str(country_list))
+    print('counting country ..from ' + target_language.upper())
+    twitterStream.sample(languages=[country_code_dict[target_language]],async=True)
+
+    #filtering Examples
+    #twitterStream.sample(languages=languages)
     #twitterStream.filter(async=True, track=['지진'], languages=['ko'])
     print('listening..')
