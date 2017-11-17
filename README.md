@@ -9,6 +9,7 @@ other remote system and let them take cake of it
 4. Google translator can't handle emoji. You might need to consider UNICODE Table of all the emoji
 
 * Environment
+
 Tested python : Python 3.5.2
 Operating system : Windows
 
@@ -18,3 +19,5 @@ Operating system : Windows
 3. Visualization with these real-time data
 4. Verifying how well a machine learning algorithm works
 5. Performance comparison with pyspark if stucked with overwhelming real-time data
+
+* Result(graph..)
