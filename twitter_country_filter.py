@@ -28,7 +28,7 @@ if __name__ == '__main__':
         country_code_dict[country] = code
 
     # twitter listener with passing country list
-    twitterListener = TwitterListener.TwitterListener(country_list)
+    twitterListener = TwitterListener.TwitterListener(target_language, country_list)
     twitterStream = Stream(auth, twitterListener)
     print('connecting..')
     print('country list ' + str(country_list))

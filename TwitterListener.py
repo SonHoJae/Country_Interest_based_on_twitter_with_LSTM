@@ -7,14 +7,15 @@ import datetime
 
 class TwitterListener(StreamListener):
 
-    def __init__(self, country_list):
+    def __init__(self, target_language, country_list):
         # Google translator needs to resolve emoji issue(json error!)
         self.translator = googletrans.Translator()
         # Country : Count pair
         self.interest_dictionary = dict()
         # Country list from target language
         self.country_list = country_list
-        # Record timer
+        # Target language
+        self.target_language = target_language
 
     # timer
     def on_connect(self):
@@ -22,11 +23,12 @@ class TwitterListener(StreamListener):
             print(str(datetime.datetime.now()))
             timer = threading.Timer(duration, funcTimer, args=(duration,))
             timer.start()
-            print(googletrans.Translator().translate(str(self.interest_dictionary)).text)
+            print(self.target_language + ' users are showing interests on \n'+googletrans.Translator().translate(str(
+                                         self.interest_dictionary)).text)
             # timer.cancel()
         duration = 60
-        funcTimer(duration)
         print('Duration -> ' + str(duration) + ' seconds')
+        funcTimer(duration)
 
     # Counting country
     def on_data(self, data):
