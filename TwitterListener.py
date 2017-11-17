@@ -1,4 +1,4 @@
-# This program is with python 3.5
+# -*- coding:utf-8 -*-
 from tweepy import StreamListener
 import json
 import googletrans
