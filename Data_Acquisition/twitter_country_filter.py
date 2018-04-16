@@ -16,8 +16,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token_key, access_token_secret)
 
 if __name__ == '__main__':
-    target_language = sys.argv[1] # country argv
-    target_language = 'japanese'
+    target_language = 'english' #sys.argv[1] # country argv
     # country list from target language
     countries = open('./countries_language/countries_'+target_language,'rt', encoding='UTF8')
     country_list = []
