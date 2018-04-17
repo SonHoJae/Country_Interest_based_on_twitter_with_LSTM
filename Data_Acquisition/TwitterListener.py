@@ -6,6 +6,7 @@ import threading
 import datetime
 import sqlite3
 
+
 class TwitterListener(StreamListener):
 
     def __init__(self, target_language, country_list):
@@ -30,25 +31,22 @@ class TwitterListener(StreamListener):
 
             time = str(datetime.datetime.now())
             result = googletrans.Translator().translate(str(self.interest_dictionary)).text
-            print(str(self.interest_dictionary))
-            print(time)
-            insert_sql = 'INSERT INTO korean (country, count) VALUES (?,?)'
-            update_sql = 'UPDATE korean SET count = ? WHERE country = ? '
+            insert_sql = 'INSERT INTO english (country, count, date) VALUES (?,?,?)'
+            #update_sql = 'UPDATE korean SET count = ? WHERE country = ? '
             for info in self.interest_dictionary:
-                print(info)
-                print(self.interest_dictionary[info])
-                try:
-                    self.c.execute(insert_sql,(info,self.interest_dictionary[info]))
-                except sqlite3.IntegrityError:
-                    self.c.execute(update_sql, (self.interest_dictionary[info],info))
+                self.c.execute(insert_sql,(info,self.interest_dictionary[info],datetime.datetime.now()))
+                print(info,self.interest_dictionary[info],datetime.datetime.now())
+                #except sqlite3.IntegrityError:
+                    #self.c.execute(update_sql, (self.interest_dictionary[info],info))
             self.conn.commit()
 
             #print(self.target_language + ' users are showing interests on \n'+result)
 
-        duration = 5
+        duration = 60
         print('Duration -> ' + str(duration) + ' seconds')
         funcTimer(duration)
-        sql = 'create table if not exists ' + 'KOREAN' + ' (Country TEXT UNIQUE, Count INTEGER NOT NULL DEFAULT 0)'
+        sql = 'create table if not exists ' + 'english' + ' (Country TEXT, Count INTEGER NOT NULL DEFAULT 0, ' \
+                                                         'Date timestamp)'
         self.c.execute(sql)
 
 
